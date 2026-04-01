@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+
+        <tab id="adminmenu" translate="label">
+            <label>Adminmenu</label>
+        </tab>
+
+        <section id="adminmenu_featuremenu" showInDefault="1">
+            <label>Feature Menu</label>
+            <tab>adminmenu</tab>
+            <resource>Adminmenu_FeatureMenu::menu</resource>
+
+            <group id="general" showInDefault="1">
+                <label>General</label>
+
+                <field id="enabled" type="select" showInDefault="1">
+                    <label>Enable Module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+            </group>
+        </section>
+
+    </system>
+</config>
