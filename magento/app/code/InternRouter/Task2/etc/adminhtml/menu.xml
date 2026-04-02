@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="InternRouter_Task2::main_menu"
+             title="InternRouter Task2"
+             module="InternRouter_Task2"
+             sortOrder="90"
+             resource="InternRouter_Task2::main_menu"/>
+
+        <add id="InternRouter_Task2::task2_page"
+             title="Routing Page"
+             module="InternRouter_Task2"
+             sortOrder="10"
+             parent="InternRouter_Task2::main_menu"
+             action="internroutertask2/index/index"
+             resource="InternRouter_Task2::task2_page"/>
+    </menu>
+</config>

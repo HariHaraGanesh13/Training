@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<acl xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <resources>
+        <resource id="Magento_Backend::admin">
+            <resource id="InternRouter_Task2::main_menu" title="InternRouter Task2" sortOrder="90">
+                <resource id="InternRouter_Task2::task2_page" title="Routing Page" sortOrder="10"/>
+            </resource>
+        </resource>
+    </resources>
+</acl>
