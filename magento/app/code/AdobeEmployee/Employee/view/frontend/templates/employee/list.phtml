@@ -1,0 +1,73 @@
+<?php $employees = $block->getEmployees(); ?>
+
+<div class="block block-dashboard-orders">
+    <div class="block-title order">
+        <strong><?= $escaper->escapeHtml(__('Employee Details')) ?></strong>
+        <a class="action primary" href="<?= $escaper->escapeUrl($block->getAddUrl()) ?>">
+            <span><?= $escaper->escapeHtml(__('Add Employee')) ?></span>
+        </a>
+    </div>
+
+    <div class="block-content">
+        <?php if ($employees->getSize()): ?>
+            <div class="table-wrapper orders-history">
+                <table class="data table table-order-items history" id="my-employee-table">
+                    <caption class="table-caption"><?= $escaper->escapeHtml(__('Employee Details')) ?></caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col id"><?= $escaper->escapeHtml(__('ID')) ?></th>
+                            <th scope="col" class="col name"><?= $escaper->escapeHtml(__('Name')) ?></th>
+                            <th scope="col" class="col joining_date"><?= $escaper->escapeHtml(__('Joining Date')) ?></th>
+                            <th scope="col" class="col designation"><?= $escaper->escapeHtml(__('Designation')) ?></th>
+                            <th scope="col" class="col address"><?= $escaper->escapeHtml(__('Address')) ?></th>
+                            <th scope="col" class="col status"><?= $escaper->escapeHtml(__('Status')) ?></th>
+                            <th scope="col" class="col hobbies"><?= $escaper->escapeHtml(__('Hobbies')) ?></th>
+                            <th scope="col" class="col actions"><?= $escaper->escapeHtml(__('Action')) ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($employees as $employee): ?>
+                        <tr>
+                            <td data-th="<?= $escaper->escapeHtmlAttr(__('ID')) ?>" class="col id">
+                                <?= (int)$employee->getId() ?>
+                            </td>
+                            <td data-th="<?= $escaper->escapeHtmlAttr(__('Name')) ?>" class="col name">
+                                <?= $escaper->escapeHtml($employee->getName()) ?>
+                            </td>
+                            <td data-th="<?= $escaper->escapeHtmlAttr(__('Joining Date')) ?>" class="col joining_date">
+                                <?= $escaper->escapeHtml($employee->getJoiningDate()) ?>
+                            </td>
+                            <td data-th="<?= $escaper->escapeHtmlAttr(__('Designation')) ?>" class="col designation">
+                                <?= $escaper->escapeHtml($employee->getDesignation()) ?>
+                            </td>
+                            <td data-th="<?= $escaper->escapeHtmlAttr(__('Address')) ?>" class="col address">
+                                <?= $escaper->escapeHtml($employee->getAddress()) ?>
+                            </td>
+                            <td data-th="<?= $escaper->escapeHtmlAttr(__('Status')) ?>" class="col status">
+                                <?= $employee->getStatus() ? $escaper->escapeHtml(__('Active')) : $escaper->escapeHtml(__('Inactive')) ?>
+                            </td>
+                            <td data-th="<?= $escaper->escapeHtmlAttr(__('Hobbies')) ?>" class="col hobbies">
+                                <?= $escaper->escapeHtml($employee->getHobbies()) ?>
+                            </td>
+                            <td data-th="<?= $escaper->escapeHtmlAttr(__('Action')) ?>" class="col actions">
+                                <a href="<?= $escaper->escapeUrl($block->getEditUrl($employee->getId())) ?>">
+                                    <?= $escaper->escapeHtml(__('Edit')) ?>
+                                </a>
+                                <span> | </span>
+                                <a href="<?= $escaper->escapeUrl($block->getDeleteUrl($employee->getId())) ?>"
+                                   onclick="return confirm('<?= $escaper->escapeJs(__('Are you sure you want to delete this employee?')) ?>');">
+                                    <?= $escaper->escapeHtml(__('Delete')) ?>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php else: ?>
+            <div class="message info empty">
+                <span><?= $escaper->escapeHtml(__('No employee records found.')) ?></span>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

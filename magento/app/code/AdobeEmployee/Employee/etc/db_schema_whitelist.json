@@ -1,0 +1,16 @@
+{
+    "adobe_employee": {
+        "column": {
+            "id": true,
+            "name": true,
+            "joining_date": true,
+            "designation": true,
+            "address": true,
+            "status": true,
+            "hobbies": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

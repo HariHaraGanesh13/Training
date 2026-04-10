@@ -1,0 +1,82 @@
+<?php
+$employee = $block->getEmployee();
+$hobbies = $employee && $employee->getHobbies() ? explode(',', $employee->getHobbies()) : [];
+?>
+
+<form action="<?= $escaper->escapeUrl($block->getSaveUrl()) ?>" method="post">
+    <?= $block->getBlockHtml('formkey') ?>
+
+    <?php if ($employee && $employee->getId()): ?>
+        <input type="hidden" name="id" value="<?= (int)$employee->getId() ?>">
+    <?php endif; ?>
+
+    <fieldset class="fieldset">
+        <legend class="legend">
+            <span><?= $employee && $employee->getId() ? __('Edit Employee') : __('Add Employee') ?></span>
+        </legend>
+
+        <div class="field required">
+            <label class="label"><span><?= __('Name') ?></span></label>
+            <div class="control">
+                <input type="text" name="name" class="input-text" required
+                       value="<?= $employee ? $escaper->escapeHtmlAttr($employee->getName()) : '' ?>">
+            </div>
+        </div>
+
+        <div class="field required">
+            <label class="label"><span><?= __('Joining Date') ?></span></label>
+            <div class="control">
+                <input type="date" name="joining_date" required
+                       value="<?= $employee ? $escaper->escapeHtmlAttr($employee->getJoiningDate()) : '' ?>">
+            </div>
+        </div>
+
+        <div class="field required">
+            <label class="label"><span><?= __('Designation') ?></span></label>
+            <div class="control">
+                <input type="text" name="designation" class="input-text" required
+                       value="<?= $employee ? $escaper->escapeHtmlAttr($employee->getDesignation()) : '' ?>">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label"><span><?= __('Address') ?></span></label>
+            <div class="control">
+                <textarea name="address"><?= $employee ? $escaper->escapeHtml($employee->getAddress()) : '' ?></textarea>
+            </div>
+        </div>
+
+        <div class="field required">
+            <label class="label"><span><?= __('Status') ?></span></label>
+            <div class="control">
+                <select name="status">
+                    <option value="1" <?= ($employee && $employee->getStatus() == 1) ? 'selected' : '' ?>><?= __('Active') ?></option>
+                    <option value="0" <?= ($employee && $employee->getStatus() == 0) ? 'selected' : '' ?>><?= __('Inactive') ?></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label"><span><?= __('Hobbies') ?></span></label>
+            <div class="control">
+                <label><input type="checkbox" name="hobbies[]" value="Reading" <?= in_array('Reading', $hobbies) ? 'checked' : '' ?>> Reading</label>
+                <label><input type="checkbox" name="hobbies[]" value="Traveling" <?= in_array('Traveling', $hobbies) ? 'checked' : '' ?>> Traveling</label>
+                <label><input type="checkbox" name="hobbies[]" value="Sports" <?= in_array('Sports', $hobbies) ? 'checked' : '' ?>> Sports</label>
+                <label><input type="checkbox" name="hobbies[]" value="Music" <?= in_array('Music', $hobbies) ? 'checked' : '' ?>> Music</label>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action save primary">
+                <span><?= __('Save') ?></span>
+            </button>
+        </div>
+        <div class="secondary">
+            <a href="<?= $escaper->escapeUrl($block->getBackUrl()) ?>" class="action back">
+                <span><?= __('Back') ?></span>
+            </a>
+        </div>
+    </div>
+</form>
