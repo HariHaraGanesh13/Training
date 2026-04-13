@@ -9,7 +9,9 @@ use Magento\Customer\Controller\AbstractAccount;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Registry;
 use Adobe\Employee\Api\EmployeeRepositoryInterface;
-
+/**
+ * Summary of Edit
+ */
 class Edit extends AbstractAccount
 {
     protected $resultPageFactory;
@@ -27,15 +29,22 @@ class Edit extends AbstractAccount
         $this->registry = $registry;
         $this->employeeRepository = $employeeRepository;
     }
+    /**
+     * Summary of execute
+     */
+    public function execute(){
+    $resultPage = $this->resultPageFactory->create();
 
-    public function execute()
-    {
-        $id = (int)$this->getRequest()->getParam('id');
-        if ($id) {
-            $employee = $this->employeeRepository->getById($id);
-            $this->registry->register('current_employee', $employee);
+    $id = (int)$this->getRequest()->getParam('id');
+
+    if ($id) {
+        $block = $resultPage->getLayout()->getBlock('adobeemployee.employee.form');
+
+        if ($block) {
+            $block->setData('employee_id', $id);
         }
-
-        return $this->resultPageFactory->create();
     }
+
+    return $resultPage;
+}
 }

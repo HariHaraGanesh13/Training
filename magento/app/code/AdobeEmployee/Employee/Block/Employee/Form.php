@@ -1,36 +1,62 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace Adobe\Employee\Block\Employee;
 
 use Magento\Framework\View\Element\Template;
-use Magento\Framework\Registry;
+use Adobe\Employee\Api\EmployeeRepositoryInterface;
 
 class Form extends Template
 {
-    protected $registry;
+    /**
+     * @var EmployeeRepositoryInterface
+     */
+    protected $employeeRepository;
 
+    /**
+     * @param Template\Context $context
+     * @param EmployeeRepositoryInterface $employeeRepository
+     * @param array $data
+     */
     public function __construct(
         Template\Context $context,
-        Registry $registry,
+        EmployeeRepositoryInterface $employeeRepository,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->registry = $registry;
+        $this->employeeRepository = $employeeRepository;
     }
 
+    /**
+     * Get employee for edit form
+     *
+     * @return \Adobe\Employee\Api\Data\EmployeeInterface|\Adobe\Employee\Model\Employee|null
+     */
     public function getEmployee()
     {
-        return $this->registry->registry('current_employee');
+        $id = (int) $this->getData('employee_id');
+
+        if ($id) {
+            return $this->employeeRepository->getById($id);
+        }
+
+        return null;
     }
 
+    /**
+     * Form action URL
+     *
+     * @return string
+     */
     public function getSaveUrl()
     {
         return $this->getUrl('adobeemployee/employee/save');
     }
 
+    /**
+     * Back URL
+     *
+     * @return string
+     */
     public function getBackUrl()
     {
         return $this->getUrl('adobeemployee/employee/index');
