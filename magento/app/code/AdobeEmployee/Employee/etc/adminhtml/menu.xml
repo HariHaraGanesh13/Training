@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Adobe_Employee::employee_root"
+            title="Employee"
+            module="Adobe_Employee"
+            sortOrder="150"
+            resource="Adobe_Employee::employee_root"/>
+
+        <add id="Adobe_Employee::employee"
+            title="Manage Employees"
+            module="Adobe_Employee"
+            sortOrder="10"
+            parent="Adobe_Employee::employee_root"
+            action="adobe_employee/employee/index"
+            resource="Adobe_Employee::employee"/>
+    </menu>
+</config>

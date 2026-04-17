@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">adobe_employee_employee_listing.adobe_employee_employee_listing_data_source</item>
+        </item>
+    </argument>
+
+    <settings>
+        <spinner>employee_columns</spinner>
+        <deps>
+            <dep>adobe_employee_employee_listing.adobe_employee_employee_listing_data_source</dep>
+        </deps>
+        <buttons>
+            <button name="add">
+                <url path="adobe_employee/employee/new"/>
+                <class>primary</class>
+                <label translate="true">Add Employee</label>
+            </button>
+        </buttons>
+    </settings>
+
+    <dataSource name="adobe_employee_employee_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Adobe_Employee::employee</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider"
+                      name="adobe_employee_employee_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <listingToolbar name="listing_top">
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+        <massaction name="listing_massaction">
+            <action name="delete">
+                <settings>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                    <url path="adobe_employee/employee/massDelete"/>
+                    <confirm>
+                        <title translate="true">Delete employees</title>
+                        <message translate="true">Are you sure you want to delete the selected employees?</message>
+                    </confirm>
+                </settings>
+            </action>
+        </massaction>
+    </listingToolbar>
+
+    <columns name="employee_columns">
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>id</indexField>
+            </settings>
+        </selectionsColumn>
+
+        <column name="id">
+            <settings>
+                <filter>textRange</filter>
+                <sorting>asc</sorting>
+                <label translate="true">ID</label>
+            </settings>
+        </column>
+
+        <column name="name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Name</label>
+            </settings>
+        </column>
+
+        <column name="joining_date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Joining Date</label>
+            </settings>
+        </column>
+
+        <column name="designation">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Designation</label>
+            </settings>
+        </column>
+
+        <column name="address">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Address</label>
+            </settings>
+        </column>
+
+        <column name="status">
+            <settings>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+            </settings>
+        </column>
+
+        <column name="hobbies">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Hobbies</label>
+            </settings>
+        </column>
+
+        <actionsColumn name="actions" class="Adobe\Employee\Ui\Component\Listing\Column\EmployeeActions">
+            <settings>
+                <indexField>id</indexField>
+                <label translate="true">Actions</label>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>
