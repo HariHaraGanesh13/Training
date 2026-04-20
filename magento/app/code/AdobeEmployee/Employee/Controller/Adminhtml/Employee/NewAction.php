@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace Adobe\Employee\Controller\Adminhtml\Employee;
 
 class NewAction extends Index

@@ -7,10 +7,7 @@ namespace Adobe\Employee\Controller\Employee;
 
 use Magento\Customer\Controller\AbstractAccount;
 use Magento\Framework\View\Result\PageFactory;
-/**
- * 
- * 
- */
+
 class NewAction extends AbstractAccount
 {
     protected $resultPageFactory;
