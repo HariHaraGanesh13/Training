@@ -1,82 +1,103 @@
 <?php
-$employee = $block->getEmployee();
-$hobbies = $employee && $employee->getHobbies() ? explode(',', $employee->getHobbies()) : [];
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/** @var \Magento\Framework\View\Element\Template $block */
+$id = (int)$block->getRequest()->getParam('id');
 ?>
 
-<form action="<?= $escaper->escapeUrl($block->getSaveUrl()) ?>" method="post">
-    <?= $block->getBlockHtml('formkey') ?>
+<div id="employee-form-container">
+    <!-- ko scope: 'employeeForm' -->
 
-    <?php if ($employee && $employee->getId()): ?>
-        <input type="hidden" name="id" value="<?= (int)$employee->getId() ?>">
-    <?php endif; ?>
+    <h1 data-bind="text: pageTitle"></h1>
 
-    <fieldset class="fieldset">
-        <legend class="legend">
-            <span><?= $employee && $employee->getId() ? __('Edit Employee') : __('Add Employee') ?></span>
-        </legend>
+    <form data-bind="submit: saveEmployee">
+        <input type="hidden" data-bind="value: employeeId"/>
 
-        <div class="field required">
-            <label class="label"><span><?= __('Name') ?></span></label>
-            <div class="control">
-                <input type="text" name="name" class="input-text" required
-                       value="<?= $employee ? $escaper->escapeHtmlAttr($employee->getName()) : '' ?>">
+        <fieldset class="fieldset">
+            <div class="field required">
+                <label class="label"><span><?= $escaper->escapeHtml(__('Name')) ?></span></label>
+                <div class="control">
+                    <input type="text" class="input-text" data-bind="value: name"/>
+                </div>
+            </div>
+
+            <div class="field required">
+                <label class="label"><span><?= $escaper->escapeHtml(__('Joining Date')) ?></span></label>
+                <div class="control">
+                    <input type="date" data-bind="value: joiningDate"/>
+                </div>
+            </div>
+
+            <div class="field required">
+                <label class="label"><span><?= $escaper->escapeHtml(__('Designation')) ?></span></label>
+                <div class="control">
+                    <input type="text" class="input-text" data-bind="value: designation"/>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label"><span><?= $escaper->escapeHtml(__('Address')) ?></span></label>
+                <div class="control">
+                    <textarea data-bind="value: address"></textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label"><span><?= $escaper->escapeHtml(__('Status')) ?></span></label>
+                <div class="control">
+                    <select data-bind="value: status">
+                        <option value="1"><?= $escaper->escapeHtml(__('Active')) ?></option>
+                        <option value="0"><?= $escaper->escapeHtml(__('Inactive')) ?></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label"><span><?= $escaper->escapeHtml(__('Hobbies')) ?></span></label>
+                <div class="control">
+                    <!-- ko foreach: hobbyOptions -->
+                    <label style="margin-right: 12px;">
+                        <input type="checkbox" data-bind="checked: $parent.hobbies, checkedValue: value"/>
+                        <span data-bind="text: label"></span>
+                    </label>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" class="action save primary">
+                    <span><?= $escaper->escapeHtml(__('Save')) ?></span>
+                </button>
+            </div>
+            <div class="secondary">
+                <button type="button" class="action back" data-bind="click: goBack">
+                    <span><?= $escaper->escapeHtml(__('Back')) ?></span>
+                </button>
             </div>
         </div>
+    </form>
 
-        <div class="field required">
-            <label class="label"><span><?= __('Joining Date') ?></span></label>
-            <div class="control">
-                <input type="date" name="joining_date" required
-                       value="<?= $employee ? $escaper->escapeHtmlAttr($employee->getJoiningDate()) : '' ?>">
-            </div>
-        </div>
+    <!-- /ko -->
+</div>
 
-        <div class="field required">
-            <label class="label"><span><?= __('Designation') ?></span></label>
-            <div class="control">
-                <input type="text" name="designation" class="input-text" required
-                       value="<?= $employee ? $escaper->escapeHtmlAttr($employee->getDesignation()) : '' ?>">
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label"><span><?= __('Address') ?></span></label>
-            <div class="control">
-                <textarea name="address"><?= $employee ? $escaper->escapeHtml($employee->getAddress()) : '' ?></textarea>
-            </div>
-        </div>
-
-        <div class="field required">
-            <label class="label"><span><?= __('Status') ?></span></label>
-            <div class="control">
-                <select name="status">
-                    <option value="1" <?= ($employee && $employee->getStatus() == 1) ? 'selected' : '' ?>><?= __('Active') ?></option>
-                    <option value="0" <?= ($employee && $employee->getStatus() == 0) ? 'selected' : '' ?>><?= __('Inactive') ?></option>
-                </select>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label"><span><?= __('Hobbies') ?></span></label>
-            <div class="control">
-                <label><input type="checkbox" name="hobbies[]" value="Reading" <?= in_array('Reading', $hobbies) ? 'checked' : '' ?>> Reading</label>
-                <label><input type="checkbox" name="hobbies[]" value="Traveling" <?= in_array('Traveling', $hobbies) ? 'checked' : '' ?>> Traveling</label>
-                <label><input type="checkbox" name="hobbies[]" value="Sports" <?= in_array('Sports', $hobbies) ? 'checked' : '' ?>> Sports</label>
-                <label><input type="checkbox" name="hobbies[]" value="Music" <?= in_array('Music', $hobbies) ? 'checked' : '' ?>> Music</label>
-            </div>
-        </div>
-    </fieldset>
-
-    <div class="actions-toolbar">
-        <div class="primary">
-            <button type="submit" class="action save primary">
-                <span><?= __('Save') ?></span>
-            </button>
-        </div>
-        <div class="secondary">
-            <a href="<?= $escaper->escapeUrl($block->getBackUrl()) ?>" class="action back">
-                <span><?= __('Back') ?></span>
-            </a>
-        </div>
-    </div>
-</form>
+<script type="text/x-magento-init">
+{
+    "#employee-form-container": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "employeeForm": {
+                    "component": "Adobe_Employee/js/employee-form",
+                    "employeeId": "<?= (int)$id ?>",
+                    "getUrl": "<?= $escaper->escapeJs($block->getUrl('adobeemployee/ajax/get')) ?>",
+                    "saveUrl": "<?= $escaper->escapeJs($block->getUrl('adobeemployee/ajax/save')) ?>",
+                    "backUrl": "<?= $escaper->escapeJs($block->getUrl('adobeemployee/employee/index')) ?>"
+                }
+            }
+        }
+    }
+}
+</script>

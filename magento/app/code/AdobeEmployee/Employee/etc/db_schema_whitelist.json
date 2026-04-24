@@ -2,12 +2,16 @@
     "adobe_employee": {
         "column": {
             "id": true,
+            "customer_id": true,
             "name": true,
             "joining_date": true,
             "designation": true,
             "address": true,
             "status": true,
             "hobbies": true
+        },
+        "index": {
+            "ADOBE_EMPLOYEE_CUSTOMER_ID": true
         },
         "constraint": {
             "PRIMARY": true

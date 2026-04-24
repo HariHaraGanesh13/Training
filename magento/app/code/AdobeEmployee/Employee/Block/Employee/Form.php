@@ -36,13 +36,23 @@ class Form extends Template
      */
     public function getEmployee()
     {
-        $id = (int) $this->getData('employee_id');
+        $id = (int)$this->getRequest()->getParam('id');
 
-        if ($id) {
-            return $this->employeeRepository->getById($id);
+        if (!$id || !$this->customerSession->isLoggedIn()) {
+            return null;
         }
 
-        return null;
+        try {
+            $employee = $this->employeeRepository->getById($id);
+
+            if ((int)$employee->getData('customer_id') !== (int)$this->customerSession->getCustomerId()) {
+                return null;
+            }
+
+            return $employee;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     /**

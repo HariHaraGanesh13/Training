@@ -1,0 +1,153 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/** @var \Magento\Framework\View\Element\Template $block */
+?>
+
+<div id="employee-knockout-container">
+    <!-- ko scope: 'employeeCrud' -->
+
+    <div data-bind="visible: !isFormVisible()">
+
+        <button type="button"
+                class="action primary"
+                data-bind="click: showAddForm">
+            <?= $escaper->escapeHtml(__('Add Employee')) ?>
+        </button>
+
+        <table class="data table" style="margin-top:25px;">
+            <thead>
+            <tr>
+                <th><?= $escaper->escapeHtml(__('ID')) ?></th>
+                <th><?= $escaper->escapeHtml(__('Name')) ?></th>
+                <th><?= $escaper->escapeHtml(__('Joining Date')) ?></th>
+                <th><?= $escaper->escapeHtml(__('Designation')) ?></th>
+                <th><?= $escaper->escapeHtml(__('Address')) ?></th>
+                <th><?= $escaper->escapeHtml(__('Status')) ?></th>
+                <th><?= $escaper->escapeHtml(__('Hobbies')) ?></th>
+                <th><?= $escaper->escapeHtml(__('Actions')) ?></th>
+            </tr>
+            </thead>
+
+            <tbody data-bind="foreach: employees">
+            <tr>
+                <td data-bind="text: id"></td>
+                <td data-bind="text: name"></td>
+                <td data-bind="text: joining_date"></td>
+                <td data-bind="text: designation"></td>
+                <td data-bind="text: address"></td>
+                <td data-bind="text: status == 1 ? 'Active' : 'Inactive'"></td>
+                <td data-bind="text: hobbies_text"></td>
+                <td>
+                    <button type="button"
+                            data-bind="click: function () { $parent.editEmployee($data); }">
+                        <?= $escaper->escapeHtml(__('Edit')) ?>
+                    </button>
+
+                    <button type="button"
+                            data-bind="click: function () { $parent.deleteEmployee($data); }">
+                        <?= $escaper->escapeHtml(__('Delete')) ?>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- ko if: employees().length === 0 -->
+        <p><?= $escaper->escapeHtml(__('No employee records found.')) ?></p>
+        <!-- /ko -->
+    </div>
+
+    <div data-bind="visible: isFormVisible" style="display:none;">
+        <h2 data-bind="text: formTitle"></h2>
+
+        <form data-bind="submit: saveEmployee">
+            <input type="hidden" data-bind="value: employeeId"/>
+
+            <div class="field required">
+                <label class="label"><?= $escaper->escapeHtml(__('Name')) ?></label>
+                <div class="control">
+                    <input type="text" class="input-text" data-bind="value: name"/>
+                </div>
+            </div>
+
+            <div class="field required">
+                <label class="label"><?= $escaper->escapeHtml(__('Joining Date')) ?></label>
+                <div class="control">
+                    <input type="date" data-bind="value: joiningDate"/>
+                </div>
+            </div>
+
+            <div class="field required">
+                <label class="label"><?= $escaper->escapeHtml(__('Designation')) ?></label>
+                <div class="control">
+                    <input type="text" class="input-text" data-bind="value: designation"/>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label"><?= $escaper->escapeHtml(__('Address')) ?></label>
+                <div class="control">
+                    <textarea data-bind="value: address"></textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label"><?= $escaper->escapeHtml(__('Status')) ?></label>
+                <div class="control">
+                    <select data-bind="value: status">
+                        <option value="1"><?= $escaper->escapeHtml(__('Active')) ?></option>
+                        <option value="0"><?= $escaper->escapeHtml(__('Inactive')) ?></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label"><?= $escaper->escapeHtml(__('Hobbies')) ?></label>
+                <div class="control">
+                    <!-- ko foreach: hobbyOptions -->
+                    <label style="margin-right:10px;">
+                        <input type="checkbox"
+                               data-bind="checked: $parent.hobbies, checkedValue: value"/>
+                        <span data-bind="text: label"></span>
+                    </label>
+                    <!-- /ko -->
+                </div>
+            </div>
+
+            <div class="actions-toolbar" style="margin-top:15px;">
+                <button type="submit" class="action primary">
+                    <?= $escaper->escapeHtml(__('Save')) ?>
+                </button>
+
+                <button type="button"
+                        class="action secondary"
+                        data-bind="click: cancelForm">
+                    <?= $escaper->escapeHtml(__('Cancel')) ?>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+{
+    "#employee-knockout-container": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "employeeCrud": {
+                    "component": "Adobe_Employee/js/employee-crud",
+                    "listUrl": "<?= $escaper->escapeJs($block->getUrl('adobeemployee/ajax/listJson')) ?>",
+                    "getUrl": "<?= $escaper->escapeJs($block->getUrl('adobeemployee/ajax/get')) ?>",
+                    "saveUrl": "<?= $escaper->escapeJs($block->getUrl('adobeemployee/ajax/save')) ?>",
+                    "deleteUrl": "<?= $escaper->escapeJs($block->getUrl('adobeemployee/ajax/delete')) ?>"
+                }
+            }
+        }
+    }
+}
+</script>
