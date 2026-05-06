@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Adobe\Employee\Api\EmployeeRepositoryInterface"
+                type="Adobe\Employee\Model\EmployeeRepository"/>
+
+    <preference for="Adobe\Employee\Api\EmployeeApiInterface"
+                type="Adobe\Employee\Model\Api\EmployeeApi"/>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="adobe_employee_employee_listing_data_source" xsi:type="string">
+                    Adobe\Employee\Model\ResourceModel\Employee\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+</config>
