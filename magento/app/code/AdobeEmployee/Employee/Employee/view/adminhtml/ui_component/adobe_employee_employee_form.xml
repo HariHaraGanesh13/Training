@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">adobe_employee_employee_form.adobe_employee_employee_form_data_source</item>
+            <item name="deps" xsi:type="string">adobe_employee_employee_form.adobe_employee_employee_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Employee</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="save" class="primary">
+                <url path="*/*/save"/>
+                <label translate="true">Save</label>
+            </button>
+            <button name="back">
+                <url path="*/*/"/>
+                <label translate="true">Back</label>
+            </button>
+        </buttons>
+        <namespace>adobe_employee_employee_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>adobe_employee_employee_form.adobe_employee_employee_form_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="adobe_employee_employee_form_data_source" component="Magento_Ui/js/form/provider">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="adobe_employee/employee/save"/>
+        </settings>
+        <dataProvider class="Adobe\Employee\Ui\DataProvider\Employee\FormDataProvider"
+                      name="adobe_employee_employee_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <fieldset name="general">
+        <settings>
+            <label translate="true">General Information</label>
+            <collapsible>false</collapsible>
+        </settings>
+
+        <field name="id" formElement="input" sortOrder="10">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>id</dataScope>
+                <label translate="true">ID</label>
+            </settings>
+        </field>
+
+        <field name="name" formElement="input" sortOrder="20">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <dataScope>name</dataScope>
+                <label translate="true">Name</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+
+        <field name="joining_date" formElement="date" sortOrder="30">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>date</dataType>
+                <dataScope>joining_date</dataScope>
+                <label translate="true">Joining Date</label>
+            </settings>
+        </field>
+
+        <field name="designation" formElement="input" sortOrder="40">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <dataScope>designation</dataScope>
+                <label translate="true">Designation</label>
+            </settings>
+        </field>
+
+        <field name="address" formElement="textarea" sortOrder="50">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <dataScope>address</dataScope>
+                <label translate="true">Address</label>
+            </settings>
+        </field>
+
+        <field name="status" formElement="select" sortOrder="60">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <dataScope>status</dataScope>
+                <label translate="true">Status</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <field name="hobbies" formElement="multiselect" sortOrder="70">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Hobbies</label>
+                <dataScope>hobbies</dataScope>
+            </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <options>
+                            <option name="reading" xsi:type="array">
+                                <item name="value" xsi:type="string">Reading</item>
+                                <item name="label" xsi:type="string" translate="true">Reading</item>
+                            </option>
+                            <option name="traveling" xsi:type="array">
+                                <item name="value" xsi:type="string">Traveling</item>
+                                <item name="label" xsi:type="string" translate="true">Traveling</item>
+                            </option>
+                            <option name="sports" xsi:type="array">
+                                <item name="value" xsi:type="string">Sports</item>
+                                <item name="label" xsi:type="string" translate="true">Sports</item>
+                            </option>
+                            <option name="music" xsi:type="array">
+                                <item name="value" xsi:type="string">Music</item>
+                                <item name="label" xsi:type="string" translate="true">Music</item>
+                            </option>
+                        </options>
+                    </settings>
+                </multiselect>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

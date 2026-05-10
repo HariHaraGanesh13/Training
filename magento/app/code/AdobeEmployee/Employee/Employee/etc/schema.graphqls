@@ -1,0 +1,57 @@
+type AdobeEmployee {
+    id: Int
+    customer_id: Int
+    name: String
+    joining_date: String
+    designation: String
+    address: String
+    status: Int
+    hobbies: [String]
+}
+
+input AdobeEmployeeCreateInput {
+    name: String!
+    joining_date: String!
+    designation: String!
+    address: String
+    status: Int
+    hobbies: [String]
+}
+
+input AdobeEmployeeUpdateInput {
+    id: Int!
+    name: String
+    joining_date: String
+    designation: String
+    address: String
+    status: Int
+    hobbies: [String]
+}
+
+type AdobeEmployeeUpdateResponse {
+    success: Boolean
+    message: String
+    employee: AdobeEmployee
+}
+
+type Query {
+    adobeEmployees: [AdobeEmployee]
+        @resolver(class: "Adobe\\Employee\\Model\\Resolver\\Employee\\GetList")
+        @doc(description: "Fetch employees for the logged-in customer")
+}
+
+type Mutation {
+
+    createAdobeEmployee(input: AdobeEmployeeCreateInput!): AdobeEmployeeUpdateResponse
+        @resolver(class: "Adobe\\Employee\\Model\\Resolver\\Employee\\Create")
+        @doc(description: "Create employee for the logged-in customer")
+
+    updateAdobeEmployee(input: AdobeEmployeeUpdateInput!): AdobeEmployeeUpdateResponse
+        @resolver(class: "Adobe\\Employee\\Model\\Resolver\\Employee\\Update")
+        @doc(description: "Update employee for the logged-in customer")
+
+    deleteAdobeEmployee(id: Int!): AdobeEmployeeUpdateResponse
+        @resolver(class: "Adobe\\Employee\\Model\\Resolver\\Employee\\Delete")
+        @doc(description: "Delete employee for the logged-in customer")
+    
+}

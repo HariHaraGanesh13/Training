@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <route url="/V1/adobeemployee/employees" method="GET">
+        <service class="Adobe\Employee\Api\EmployeeApiInterface" method="getEmployees"/>
+        <resources>
+            <resource ref="Magento_Backend::admin"/>
+        </resources>
+    </route>
+
+    <route url="/V1/adobeemployee/employee/:id" method="GET">
+        <service class="Adobe\Employee\Api\EmployeeApiInterface" method="getEmployee"/>
+        <resources>
+            <resource ref="Magento_Backend::admin"/>
+        </resources>
+    </route>
+
+    <route url="/V1/adobeemployee/employee" method="POST">
+        <service class="Adobe\Employee\Api\EmployeeApiInterface" method="createEmployee"/>
+        <resources>
+            <resource ref="Magento_Backend::admin"/>
+        </resources>
+    </route>
+
+    <route url="/V1/adobeemployee/employee/:id" method="PUT">
+        <service class="Adobe\Employee\Api\EmployeeApiInterface" method="updateEmployee"/>
+        <resources>
+            <resource ref="Magento_Backend::admin"/>
+        </resources>
+    </route>
+
+    <route url="/V1/adobeemployee/employee/:id" method="DELETE">
+        <service class="Adobe\Employee\Api\EmployeeApiInterface" method="deleteEmployee"/>
+        <resources>
+            <resource ref="Magento_Backend::admin"/>
+        </resources>
+    </route>
+
+</routes>
