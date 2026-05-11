@@ -38,8 +38,7 @@ class StatusUpdateConsumer
     {
         $data = json_decode($message, true);
 
-        if (
-            !isset($data['ids']) ||
+        if (!isset($data['ids']) ||
             !isset($data['status'])
         ) {
             return;
